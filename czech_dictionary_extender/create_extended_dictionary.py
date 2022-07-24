@@ -22,7 +22,7 @@ def create_extended_dictionary():
     # Create an empty dictionary to store all english words for each czech word
     dictionary = {}
 
-    with open('extended_dictionary.txt', 'w', encoding="utf-8") as f:
+    with open('czech-english-dict.txt', 'w', encoding="utf-8") as f:
         for line in lines:
             if line.startswith('#'):
                 continue
@@ -67,7 +67,7 @@ def create_extended_dictionary():
 def create_stardict_dict():
     Glossary.init()
     glos = Glossary()
-    glos.convert(inputFilename="extended_dictionary.txt", inputFormat="Tabfile", outputFilename="extended_dictionary.ifo", outputFormat="Stardict")
+    glos.convert(inputFilename="czech-english-dict.txt", inputFormat="Tabfile", outputFilename="czech-english-dict.ifo", outputFormat="Stardict")
 
 if __name__ == "__main__":
     create_extended_dictionary()
