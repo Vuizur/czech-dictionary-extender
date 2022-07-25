@@ -67,9 +67,41 @@ def create_extended_dictionary():
 def create_stardict_dict():
     Glossary.init()
     glos = Glossary()
-    glos.convert(inputFilename="czech-english-dict.txt", inputFormat="Tabfile", outputFilename="czech-english-dict.ifo", outputFormat="Stardict")
+    glos.convert(inputFilename="czech-english-dict.txt", inputFormat="Tabfile", outputFilename="czech-english-dict.ifo", outputFormat="Stardict", infoOverride={"sourceLang": "cs", "targetLang": "en", "name": "Czech-English Dictionary", "author": "Vuizur"})
+
+def add_stardict_files_to_tar_gz():
+    """Adds the stardict files to the tar.gz file using python libraries"""
+
+    import tarfile
+
+    # Convert line endings of IFO file to Unix
+    with open('czech-english-dict.ifo', 'rb') as f:
+        lines = f.readlines()
+    with open('czech-english-dict.ifo', 'wb') as f:
+        for line in lines:
+            f.write(line.replace(b'\r\n', b'\n'))
+
+    # Create the czech-english-dict folder
+    if not os.path.isdir('czech-english-dict'):
+        os.mkdir('czech-english-dict')
+
+    # Move all files into the folder czech-english-dict using python library
+    import shutil
+    shutil.move('czech-english-dict.ifo', 'czech-english-dict/czech-english-dict.ifo')
+    shutil.move('czech-english-dict.idx', 'czech-english-dict/czech-english-dict.idx')
+    shutil.move('czech-english-dict.dict.dz', 'czech-english-dict/czech-english-dict.dict.dz')
+    shutil.move('czech-english-dict.syn', 'czech-english-dict/czech-english-dict.syn')
+
+    # Delete tarfile
+    if os.path.isfile('czech-english-dict.tar.gz'):
+        os.remove('czech-english-dict.tar.gz')
+    # Create the tar.gz file
+    with tarfile.open("czech-english-dict.tar.gz", "w:gz") as tar:
+        # Add the dictionary folder to the tar.gz file
+        tar.add('czech-english-dict')
 
 if __name__ == "__main__":
     create_extended_dictionary()
     create_stardict_dict()
+    add_stardict_files_to_tar_gz()
     
