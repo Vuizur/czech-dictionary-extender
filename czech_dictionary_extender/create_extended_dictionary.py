@@ -60,7 +60,7 @@ def create_extended_dictionary():
             # Append the czech inflections to the czech word, everything separated by |
             if len(czech_inflections) > 0:
                 czech_word += '|' + '|'.join(czech_inflections)
-            sorted_words = sorted(english_words, key=lambda x: wordfreq.word_frequency(x, "cs"), reverse=True)
+            sorted_words = sorted(english_words, key=lambda x: wordfreq.word_frequency(x, "en"), reverse=True)
             # Write the czech word and the english words (separated by comma) to the file
             f.write(czech_word + '\t' + ', '.join(sorted_words) + '\n')
 
